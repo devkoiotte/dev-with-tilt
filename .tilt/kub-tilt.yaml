@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sample-tilt
+  labels:
+    app: sample-tilt
+spec:
+  selector:
+    matchLabels:
+      app: sample-tilt
+  template:
+    metadata:
+      labels:
+        app: sample-tilt
+    spec:
+      hostNetwork: true
+      containers:
+        - name: sample-tilt
+          image: sample-tilt-image
+          env:
+            - name: ENV
+              value: dev
+            - name: JAVA_OPTS
+              value: >-
+                -Duser.timezone=America/Sao_Paulo -Dfile.encoding=UTF8 -Xms512m -Xmx512m
+            - name: ENV_SBA_ACTIVE
+              value: 'true'
+
