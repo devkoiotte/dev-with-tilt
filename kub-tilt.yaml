@@ -13,7 +13,7 @@ spec:
       labels:
         app: sample-tilt
     spec:
-      hostNetwork: true
+      hostNetwork: false
       containers:
         - name: sample-tilt
           image: sample-tilt-image

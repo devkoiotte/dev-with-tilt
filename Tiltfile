@@ -1,18 +1,10 @@
 # -*- mode: Python -*-
-# -*- mode: Python -*-
 application_name = "sample-tilt"
-port = 9080
-debug_port = 5005
+port = 9082
 application_class = 'br.com.sampletilt.SampleTiltApplicationKt'
 project_name = 'til-dev-samples'
 java_opts = '-Duser.timezone=America/Sao_Paulo -Dfile.encoding=UTF8 -Xms512m -Xmx1024m'
-debug = '-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:' + str(debug_port)
-debug_enable = False
-
-if debug_enable == True:
-    entrypoint_var = ['java', '-noverify', debug, java_opts, '-cp', '.:./lib/*', application_class]
-else:
-    entrypoint_var = ['java', '-noverify', java_opts, '-cp', '.:./lib/*', application_class]
+entrypoint_var = ['java', '-noverify', java_opts, '-cp', '.:./lib/*', application_class]
 
 # Extensão de live update para sincronizar arquivos
 # Para mais exemplos de extensões, acesse: https://docs.tilt.dev/extensions.html
@@ -40,4 +32,4 @@ docker_build_with_restart(
 
 k8s_yaml('./kub-tilt.yaml')
 k8s_resource(application_name,
-             resource_deps=[application_name + '-compile'], labels=project_name + "-pods")
+             resource_deps=[application_name + '-compile'], labels=project_name + "-pods", port_forwards=port)
